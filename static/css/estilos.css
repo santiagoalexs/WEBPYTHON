@@ -1,0 +1,72 @@
+
+
+/* Estilos para el contenedor del logo de la universidad */
+.fusion-logo {
+  background-color: #0d2a52; 
+  padding: 10px 0 10px 20px; 
+}
+
+/* Estilos para la imagen del logo dentro del contenedor */
+.fusion-logo img {
+  max-width: 220px; 
+  height: auto;
+       
+}
+
+/* Estilos para el pie de página */
+footer {
+  background: #f8f9fa;           
+  text-align: center;            
+  padding: 20px 0 10px 0;        
+  margin-top: 40px;              
+  color: #222;                   
+  font-size: 1rem;               
+  border-top: 1px solid #e1e1e1;
+}
+
+/* Estilos para el formulario de sedes */
+form.mb-4 {
+  background: #f4f8fb;                               
+  padding: 28px 24px 18px 24px;                      
+  border-radius: 12px;                              
+  box-shadow: 0 2px 8px rgba(13, 42, 82, 0.07);      
+  margin-bottom: 32px;                               
+  max-width: 500px;                                  
+  margin-left: auto;                                 
+  margin-right: auto;
+}
+
+/* Estilos para las etiquetas de los campos del formulario */
+form .form-label {
+  font-weight: 500; 
+  color: #0d2a52;   
+}
+
+/* Estilos para los campos de entrada del formulario */
+form .form-control {
+  border-radius: 6px;          
+  border: 1px solid #b6c6d6;    
+  font-size: 1rem; 
+}
+
+/* Estilos para el título principal */
+h2 {
+  text-align: center;   
+  color: #0d2a52;       
+  margin-bottom: 24px;  
+}
+
+/* Alinear los botones del formulario de sedes en una fila */
+.form-botones {
+  display: flex;     
+  gap: 12px;         
+  margin-top: 8px;
+
+}
+
+/* Ajuste para que los formularios secundarios no tengan margen ni padding extra */
+.form-botones form {
+  margin: 0;    
+  padding: 0;    
+  display: inline;
+}
