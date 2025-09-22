@@ -8,7 +8,7 @@ def create_connection():
             host="localhost",
             user="root",            # Usuario por defecto en XAMPP
             passwd="",              # Vacío si no configuraste contraseña
-            database="universidad"  # Nombre de tu BD
+            database="lenguaje_2"  # Nombre de tu BD
         )
         if connection.is_connected():
             print("✅ Conexión a MySQL/XAMPP exitosa")
