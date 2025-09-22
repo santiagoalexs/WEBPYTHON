@@ -1,18 +1,18 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block title %}Listado de Sedes{% endblock %}
 
 {% block content %}
 <br>
-<h2>Nuestras Sedes- Santiago Ariza</h2>
+<h2>Nuestras Sedes - Santiago Ariza</h2>
 <br><br>
 
 <table class="table table-bordered">
     <thead>
         <tr>
             <th>Código Sede</th>
-            <th>Descripcion de la Sede</th>
-            <th>Dirección de la sede</th>
+            <th>Descripción de la Sede</th>
+            <th>Dirección de la Sede</th>
         </tr>
     </thead>
     <tbody>
@@ -21,8 +21,8 @@
             <td>{{ sede.codsede }}</td>
             <td>{{ sede.nombresede }}</td>
             <td>{{ sede.dirsede }}</td>
-            
         </tr>
         {% endfor %}
-    </table>
     </tbody>
+</table>
+{% endblock %}

@@ -3,34 +3,40 @@
 {% block title %}Registro de Sede{% endblock %}
 
 {% block content %}
-<br>
-<h2>Nuestras Sedes-Santiago Ariza </h2>
-<form action="/sedes" method="POST" class="mb-4">
-  <div class="mb-3">
-    <label for="codsede" class="form-label">Código de la Sede</label>
-    <input type="number" id="codsede" name="codsede" class="form-control" required>
-  </div>
-  <div class="mb-3">
-    <label for="desede" class="form-label">Descripción Sede</label>
-    <input type="text" id="desede" name="desede" class="form-control" required>
-  </div>
-  <div class="mb-3">
-    <label for="dirsede" class="form-label">Dirección Sede</label>
-    <input type="text" id="dirsede" name="dirsede" class="form-control" required>
-  </div>
-  <div class="mb-3">
-    <label for="idCiudad" class="form-label">ID Ciudad</label>
-    <input type="number" id="idCiudad" name="idCiudad" class="form-control" required>
-  </div>
-  <div class="mb-3">
-    <label for="descCiudad" class="form-label">Descripción Ciudad</label>
-    <input type="text" id="descCiudad" name="descCiudad" class="form-control" required>
-  </div>
-  <button type="submit" class="btn btn-primary">Agregar Sede</button>
-</form>
+  <br>
+  <h2>Nuestras Sedes - Santiago Ariza</h2>
 
-<!-- Botón para ver listado de sedes, fuera del formulario -->
-<form action="/listasedes" method="GET">
-  <button type="submit" class="btn btn-secondary">Ver Listado de Sedes</button>
-</form>
-{% endblock %}
+  <form action="/sedes" method="POST" class="mb-4">
+    <div class="mb-3">
+      <label for="codsede" class="form-label">Código de la Sede</label>
+      <input type="number" id="codsede" name="codsede" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="desede" class="form-label">Descripción Sede</label>
+      <input type="text" id="desede" name="desede" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="dirsede" class="form-label">Dirección Sede</label>
+      <input type="text" id="dirsede" name="dirsede" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="idCiudad" class="form-label">ID Ciudad</label>
+      <input type="number" id="idCiudad" name="idCiudad" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="descCiudad" class="form-label">Descripción Ciudad</label>
+      <input type="text" id="descCiudad" name="descCiudad" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar Sede</button>
+  </form>
+
+  <!-- Botón para ver listado de sedes, fuera del formulario -->
+  <form action="/listasedes" method="GET">
+    <button type="submit" class="btn btn-secondary">Ver Listado de Sedes</button>
+  </form>
+{% endblock %}
