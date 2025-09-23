@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Sede Registrada{% endblock %}
+
+{% block title %}Sede - Registro exitoso{% endblock %}
 
 {% block content %}
-<div class="alert alert-success text-center">
-    <h4>¡Registro Exitoso!</h4>
-    <p>Sede {{ desede }} registrada correctamente con código {{ codsede }}.</p>
-    <a href="{{ url_for('sedes') }}" class="btn btn-primary">Registrar otra sede</a>
-    <a href="{{ url_for('listasedes') }}" class="btn btn-secondary">Ver listado</a>
+<div class="container mt-5">
+  <div class="alert alert-success shadow-lg p-4 rounded-3 text-center">
+    <h4 class="alert-heading">✅ Registro Exitoso</h4>
+    <p>La sede con código <strong>{{ codsede }}</strong> fue registrada correctamente.</p>
+    <hr>
+    <a href="{{ url_for('listasedes') }}" class="btn btn-primary">Ver Listado de Sedes</a>
+    <a href="{{ url_for('sedes') }}" class="btn btn-secondary">Registrar otra Sede</a>
+  </div>
 </div>
 {% endblock %}
-
 

@@ -1,27 +1,37 @@
 {% extends 'base.html' %}
-{% block title %}Registrar Sede{% endblock %}
+
+{% block title %}Registro de Sede{% endblock %}
 
 {% block content %}
-<div class="card shadow p-4">
-    <h2 class="text-center text-primary">Registrar Nueva Sede</h2>
-    <form method="POST">
-        <div class="mb-3">
-            <label class="form-label">Código Sede</label>
-            <input type="number" name="codsede" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Nombre Sede</label>
-            <input type="text" name="desede" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Dirección</label>
-            <input type="text" name="dirsede" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">ID Ciudad</label>
-            <input type="number" name="idCiudad" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar Sede</button>
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 rounded-3">
+    <h2 class="text-center text-primary mb-4">Agregar Sede</h2>
+    <form action="/sedeok" method="POST">
+      <div class="mb-3">
+        <label for="codsede" class="form-label">Código de la Sede</label>
+        <input type="number" id="codsede" name="codsede" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="nombresede" class="form-label">Nombre de la Sede</label>
+        <input type="text" id="nombresede" name="nombresede" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="dirsede" class="form-label">Dirección de la Sede</label>
+        <input type="text" id="dirsede" name="dirsede" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="IdCiudad" class="form-label">Ciudad</label>
+        <select id="IdCiudad" name="IdCiudad" class="form-control" required>
+          <option value="" disabled selected>Seleccione una ciudad</option>
+          {% for ciudad in ciudades %}
+          <option value="{{ ciudad[0] }}">{{ ciudad[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Registrar</button>
+      <a href="{{ url_for('listasedes') }}" class="btn btn-secondary">Ver Listado</a>
     </form>
+  </div>
 </div>
 {% endblock %}
+

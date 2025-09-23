@@ -1,60 +1,68 @@
 from flask import Flask, render_template, request
-from conexion import create_connection
+import conexion as db  # usamos tu archivo de conexión
 
 app = Flask(__name__)
 
+# Ruta principal
 @app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/index')
 def index():
     return render_template('index.html')
 
-@app.route('/mision')
-def mision():
-    return render_template('mision.html')
-
-@app.route('/vision')
-def vision():
-    return render_template('vision.html')
-
-@app.route('/sedes', methods=['GET', 'POST'])
+# Formulario para registrar sedes (con ciudades desplegables)
+@app.route('/sedes', methods=['GET'])
 def sedes():
-    if request.method == 'POST':
-        codsede = request.form['codsede']
-        nombresede = request.form['desede']
-        dirsede = request.form['dirsede']
-        idciudad = request.form['idCiudad']
+    conn = db.create_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT IdCiudad, nombreciudad FROM ciudad")
+    ciudades = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template('sedes.html', ciudades=ciudades)
 
-        conn = create_connection()
-        if conn:
-            cursor = conn.cursor()
-            sql = "INSERT INTO sede (codsede, nombresede, dirsede, IdCiudad) VALUES (%s, %s, %s, %s)"
-            data = (codsede, nombresede, dirsede, idciudad)
-            try:
-                cursor.execute(sql, data)
-                conn.commit()
-                return render_template('sedeok.html', codsede=codsede, desede=nombresede, dirsede=dirsede)
-            except Exception as e:
-                return f"Error al insertar: {e}"
-            finally:
-                cursor.close()
-                conn.close()
-    return render_template('sedes.html')
+# Confirmación de registro de sede
+@app.route('/sedeok', methods=['POST'])
+def sedeok():
+    codsede = request.form['codsede']
+    nombresede = request.form['nombresede']
+    dirsede = request.form['dirsede']
+    IdCiudad = request.form['IdCiudad']
 
-@app.route('/listasedes')
-def listasedes():
-    conn = create_connection()
-    sedes = []
-    if conn:
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT codsede, nombresede, dirsede FROM sede")
-        sedes = cursor.fetchall()
+    conn = db.create_connection()
+    cursor = conn.cursor()
+
+    try:
+        sql = "INSERT INTO sede (codsede, nombresede, dirsede, IdCiudad) VALUES (%s, %s, %s, %s)"
+        cursor.execute(sql, (codsede, nombresede, dirsede, IdCiudad))
+        conn.commit()
+        msg = "Registro exitoso de sede"
+    except Exception as e:
+        conn.rollback()
+        msg = f"Error al insertar: {e}"
+    finally:
         cursor.close()
         conn.close()
+
+    return render_template('sedeok.html', msg=msg, codsede=codsede)
+
+# Listado de sedes con nombre de ciudad
+@app.route('/listasedes')
+def listasedes():
+    conn = db.create_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    sql = """
+        SELECT s.codsede, s.nombresede, s.dirsede, c.nombreciudad
+        FROM sede s
+        LEFT JOIN ciudad c ON s.IdCiudad = c.IdCiudad
+    """
+    cursor.execute(sql)
+    sedes = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     return render_template('listasedes.html', sedes=sedes)
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
+# Ejecutar servidor
+if __name__ == '__main__':
+    app.run(debug=True)
