@@ -1,21 +1,27 @@
 {% extends 'base.html' %}
-
-{% block title %}Agregar Sede{% endblock %}
+{% block title %}Registrar Sede{% endblock %}
 
 {% block content %}
-<div class="card shadow-lg p-4 mt-4">
-    <h2 class="text-center text-primary mb-4">Agregar Sede</h2>
+<div class="card shadow p-4">
+    <h2 class="text-center text-primary">Registrar Nueva Sede</h2>
     <form method="POST">
         <div class="mb-3">
-            <label class="form-label">Nombre Sede</label>
-            <input type="text" class="form-control" name="nombre" required>
+            <label class="form-label">Código Sede</label>
+            <input type="number" name="codsede" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Dirección Sede</label>
-            <input type="text" class="form-control" name="direccion" required>
+            <label class="form-label">Nombre Sede</label>
+            <input type="text" name="desede" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input type="text" name="dirsede" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">ID Ciudad</label>
+            <input type="number" name="idCiudad" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Guardar Sede</button>
     </form>
 </div>
 {% endblock %}
-
