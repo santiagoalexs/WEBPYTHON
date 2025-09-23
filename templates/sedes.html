@@ -1,24 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}Registrar Sede{% endblock %}
+{% block title %}Agregar Sede{% endblock %}
 
 {% block content %}
-<div class="card p-4 shadow-lg mt-4" style="max-width:600px; margin:auto;">
-  <h2 class="text-center text-primary mb-3">Registrar Sede</h2>
-  <form action="{{ url_for('sedes') }}" method="POST">
-    <div class="mb-3">
-      <label class="form-label">Código Sede</label>
-      <input type="number" name="codsede" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Nombre Sede</label>
-      <input type="text" name="desede" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Dirección Sede</label>
-      <input type="text" name="dirsede" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary w-100">Agregar Sede</button>
-  </form>
+<div class="card shadow-lg p-4 mt-4">
+    <h2 class="text-center text-primary mb-4">Agregar Sede</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Nombre Sede</label>
+            <input type="text" class="form-control" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dirección Sede</label>
+            <input type="text" class="form-control" name="direccion" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Sede</button>
+    </form>
 </div>
 {% endblock %}
+
