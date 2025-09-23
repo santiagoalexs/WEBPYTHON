@@ -1,18 +1,20 @@
 import mysql.connector
 from mysql.connector import Error
 
+import mysql.connector
+from mysql.connector import Error
+
 def create_connection():
     connection = None
     try:
         connection = mysql.connector.connect(
             host="localhost",
-            user="root",            # Usuario por defecto en XAMPP
-            passwd="",              # Vacío si no configuraste contraseña
-            database="lenguaje_2"  # Nombre de tu BD
+            user="root",
+            password="",            # tu contraseña de MySQL
+            database="lenguaje_2"   # nombre de tu base de datos
         )
-        if connection.is_connected():
-            print("✅ Conexión a MySQL/XAMPP exitosa")
+        print("Conexión exitosa a la BD lenguaje_2")
     except Error as e:
-        print(f"❌ Error: '{e}' ocurrió")
+        print(f"Error al conectar: {e}")
     return connection
 

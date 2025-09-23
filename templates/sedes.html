@@ -1,42 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}Registro de Sede{% endblock %}
+{% block title %}Registrar Sede{% endblock %}
 
 {% block content %}
-  <br>
-  <h2>Nuestras Sedes - Santiago Ariza</h2>
-
-  <form action="/sedes" method="POST" class="mb-4">
+<div class="card p-4 shadow-lg mt-4" style="max-width:600px; margin:auto;">
+  <h2 class="text-center text-primary mb-3">Registrar Sede</h2>
+  <form action="{{ url_for('sedes') }}" method="POST">
     <div class="mb-3">
-      <label for="codsede" class="form-label">Código de la Sede</label>
-      <input type="number" id="codsede" name="codsede" class="form-control" required>
+      <label class="form-label">Código Sede</label>
+      <input type="number" name="codsede" class="form-control" required>
     </div>
-
     <div class="mb-3">
-      <label for="desede" class="form-label">Descripción Sede</label>
-      <input type="text" id="desede" name="desede" class="form-control" required>
+      <label class="form-label">Nombre Sede</label>
+      <input type="text" name="desede" class="form-control" required>
     </div>
-
     <div class="mb-3">
-      <label for="dirsede" class="form-label">Dirección Sede</label>
-      <input type="text" id="dirsede" name="dirsede" class="form-control" required>
+      <label class="form-label">Dirección Sede</label>
+      <input type="text" name="dirsede" class="form-control" required>
     </div>
-
-    <div class="mb-3">
-      <label for="idCiudad" class="form-label">ID Ciudad</label>
-      <input type="number" id="idCiudad" name="idCiudad" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="descCiudad" class="form-label">Descripción Ciudad</label>
-      <input type="text" id="descCiudad" name="descCiudad" class="form-control" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Agregar Sede</button>
+    <button type="submit" class="btn btn-primary w-100">Agregar Sede</button>
   </form>
-
-  <!-- Botón para ver listado de sedes, fuera del formulario -->
-  <form action="/listasedes" method="GET">
-    <button type="submit" class="btn btn-secondary">Ver Listado de Sedes</button>
-  </form>
+</div>
 {% endblock %}
