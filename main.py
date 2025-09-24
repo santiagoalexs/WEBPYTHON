@@ -3,82 +3,107 @@ from conexion import create_connection
 
 app = Flask(__name__)
 
-# Página de inicio
+# 🏠 Página principal
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Página de misión
+# 📜 Misión
 @app.route('/mision')
 def mision():
     return render_template('mision.html')
 
-# Página de visión
+# 👀 Visión
 @app.route('/vision')
 def vision():
     return render_template('vision.html')
 
-# Agregar sede
+# 🏫 Formulario agregar sede
 @app.route('/sedes', methods=['GET', 'POST'])
 def sedes():
     conn = create_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
     if request.method == 'POST':
         codsede = request.form['codsede']
         nombresede = request.form['nombresede']
         dirsede = request.form['dirsede']
-        ciudad = request.form['ciudad']
+        IdCiudad = request.form['IdCiudad']
 
-        cursor.execute(
-            "INSERT INTO sede (codsede, nombresede, dirsede, IdCiudad) VALUES (%s, %s, %s, %s)",
-            (codsede, nombresede, dirsede, ciudad)
-        )
-        conn.commit()
-        conn.close()
-        return render_template('sedesok.html', codsede=codsede)
+        try:
+            cursor.execute("INSERT INTO sede (codsede, nombresede, dirsede, IdCiudad) VALUES (%s, %s, %s, %s)",
+                           (codsede, nombresede, dirsede, IdCiudad))
+            conn.commit()
+            return redirect(url_for('sedesok', codsede=codsede))
+        except Exception as e:
+            print("❌ Error al insertar:", e)
 
     cursor.execute("SELECT IdCiudad, nombreciudad FROM ciudad")
     ciudades = cursor.fetchall()
+
+    cursor.close()
     conn.close()
     return render_template('sedes.html', ciudades=ciudades)
 
-# Listado de sedes
+# ✅ Confirmación de registro
+@app.route('/sedesok/<codsede>')
+def sedesok(codsede):
+    return render_template('sedesok.html', codsede=codsede)
+
+# 📋 Listado de sedes
 @app.route('/listasedes')
-def listasedes():
+def listado_sedes():
     conn = create_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute("""
-        SELECT s.IdSede, s.nombresede, c.nombreciudad
+        SELECT s.IdSede, s.codsede, s.nombresede, s.dirsede, c.nombreciudad
         FROM sede s
         LEFT JOIN ciudad c ON s.IdCiudad = c.IdCiudad
     """)
     sedes = cursor.fetchall()
+    cursor.close()
     conn.close()
     return render_template('listasedes.html', sedes=sedes)
 
-# Eliminar sede
+# ✏️ Editar sede
+@app.route('/editar_sede/<int:id>', methods=['GET', 'POST'])
+def editar_sede(id):
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        codsede = request.form['codsede']
+        nombresede = request.form['nombresede']
+        dirsede = request.form['dirsede']
+        IdCiudad = request.form['IdCiudad']
+
+        cursor.execute("""
+            UPDATE sede SET codsede=%s, nombresede=%s, dirsede=%s, IdCiudad=%s WHERE IdSede=%s
+        """, (codsede, nombresede, dirsede, IdCiudad, id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect(url_for('listado_sedes'))
+
+    cursor.execute("SELECT * FROM sede WHERE IdSede = %s", (id,))
+    sede = cursor.fetchone()
+    cursor.execute("SELECT IdCiudad, nombreciudad FROM ciudad")
+    ciudades = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return render_template('sedes.html', sede=sede, ciudades=ciudades)
+
+# ❌ Eliminar sede
 @app.route('/eliminar_sede/<int:id>', methods=['POST'])
 def eliminar_sede(id):
     conn = create_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM sede WHERE IdSede = %s", (id,))
+    cursor.execute("DELETE FROM sede WHERE IdSede=%s", (id,))
     conn.commit()
+    cursor.close()
     conn.close()
-    return redirect(url_for('listasedes'))
-
-# Editar sede
-@app.route('/editar_sede/<int:id>', methods=['POST'])
-def editar_sede(id):
-    nombre = request.form['nombre']
-    ciudad = request.form['ciudad']
-
-    conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE sede SET nombresede=%s, IdCiudad=%s WHERE IdSede=%s", (nombre, ciudad, id))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('listasedes'))
+    return redirect(url_for('listado_sedes'))
 
 if __name__ == '__main__':
     app.run(debug=True)

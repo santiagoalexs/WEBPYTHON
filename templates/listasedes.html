@@ -1,31 +1,60 @@
 {% extends 'base.html' %}
-{% block title %}Lista de Sedes{% endblock %}
+
+{% block title %}📋 Listado de Sedes{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h2 class="text-center mb-4">📋 Lista de Sedes</h2>
+<div class="card shadow-lg p-4 mt-4">
+    <h2 class="text-center text-dark">📋 Listado de Sedes</h2>
 
     {% if sedes %}
-    <div class="table-responsive">
-        <table class="table table-striped table-hover text-center align-middle shadow">
-            <thead class="table-primary">
+    <div class="table-responsive mt-3">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark text-center">
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Ciudad</th>
-                    <th>Acciones</th>
+                    <th>🔢 Código</th>
+                    <th>🏛️ Nombre</th>
+                    <th>📍 Dirección</th>
+                    <th>🌆 Ciudad</th>
+                    <th>⚙️ Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for sede in sedes %}
-                <tr id="row-{{ sede[0] }}">
-                    <td>{{ sede[0] }}</td>
-                    <td class="editable" data-field="nombre">{{ sede[1] }}</td>
-                    <td class="editable" data-field="ciudad">{{ sede[2] }}</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="editarFila({{ sede[0] }})">✏️ Editar</button>
-                        <form action="{{ url_for('eliminar_sede', id=sede[0]) }}" method="POST" style="display:inline;">
-                            <button class="btn btn-danger btn-sm">🗑️ Eliminar</button>
-                        </form>
+                <tr>
+                    <td class="text-center">{{ sede.codsede }}</td>
+                    <td>{{ sede.nombresede }}</td>
+                    <td>{{ sede.dirsede }}</td>
+                    <td>{{ sede.nombreciudad }}</td>
+                    <td class="text-center">
+                        <!-- Botón editar -->
+                        <a href="{{ url_for('editar_sede', id=sede.IdSede) }}" class="btn btn-sm btn-warning">✏️ Editar</a>
+
+                        <!-- Botón eliminar con modal -->
+                        <button type="button" class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#modalEliminar{{ sede.IdSede }}">
+                            🗑️ Eliminar
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalEliminar{{ sede.IdSede }}" tabindex="-1" aria-labelledby="modalLabel{{ sede.IdSede }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel{{ sede.IdSede }}">⚠️ Confirmar eliminación</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                              </div>
+                              <div class="modal-body">
+                                ¿Está seguro que desea eliminar la sede <strong>{{ sede.nombresede }}</strong>?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="{{ url_for('eliminar_sede', id=sede.IdSede) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                     </td>
                 </tr>
                 {% endfor %}
@@ -33,31 +62,7 @@
         </table>
     </div>
     {% else %}
-    <p class="text-muted text-center">No hay sedes registradas aún.</p>
+    <p class="text-center text-muted mt-3">😕 No hay sedes registradas.</p>
     {% endif %}
 </div>
-
-<script>
-function editarFila(id) {
-    let fila = document.getElementById("row-" + id);
-    let celdas = fila.querySelectorAll(".editable");
-
-    let nombre = celdas[0].innerText;
-    let ciudad = celdas[1].innerText;
-
-    fila.innerHTML = `
-        <td>${id}</td>
-        <td><input type="text" name="nombre" class="form-control form-control-sm" value="${nombre}"></td>
-        <td><input type="text" name="ciudad" class="form-control form-control-sm" value="${ciudad}"></td>
-        <td>
-            <form action="/editar_sede/${id}" method="POST" style="display:inline;">
-                <input type="hidden" name="nombre" value="${nombre}">
-                <input type="hidden" name="ciudad" value="${ciudad}">
-                <button class="btn btn-success btn-sm">💾 Guardar</button>
-            </form>
-            <button class="btn btn-secondary btn-sm" onclick="location.reload()">❌ Cancelar</button>
-        </td>
-    `;
-}
-</script>
 {% endblock %}
