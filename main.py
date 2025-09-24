@@ -46,9 +46,9 @@ def sedes():
     return render_template('sedes.html', ciudades=ciudades)
 
 # ✅ Confirmación de registro
-@app.route('/sedesok/<codsede>')
+@app.route('/sedeok/<codsede>')
 def sedesok(codsede):
-    return render_template('sedesok.html', codsede=codsede)
+    return render_template('sedeok.html', codsede=codsede)
 
 # 📋 Listado de sedes
 @app.route('/listasedes')
