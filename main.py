@@ -1,30 +1,31 @@
 from flask import Flask, render_template, request, redirect, url_for
+import mysql.connector
 from conexion import create_connection
 
 app = Flask(__name__)
 
-# ---- RUTA PRINCIPAL ----
+# Ruta inicio
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# ---- MISIÓN ----
+# Ruta misión
 @app.route('/mision')
 def mision():
     return render_template('mision.html')
 
-# ---- VISIÓN ----
+# Ruta visión
 @app.route('/vision')
 def vision():
     return render_template('vision.html')
 
-# ---- AGREGAR SEDE ----
+# Ruta formulario agregar sede
 @app.route('/sedes', methods=['GET', 'POST'])
 def sedes():
     conn = create_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Obtener ciudades para el combo
+    # Obtener ciudades para el select
     cursor.execute("SELECT IdCiudad, nombreciudad FROM ciudad")
     ciudades = cursor.fetchall()
 
@@ -40,9 +41,9 @@ def sedes():
                 (codsede, nombresede, dirsede, IdCiudad)
             )
             conn.commit()
-            return redirect(url_for('sedes_ok', codsede=codsede))
-        except Exception as e:
-            return f"Error al insertar: {e}"
+            return redirect(url_for('sedesok', codsede=codsede))
+        except mysql.connector.Error as err:
+            return f"Error al insertar: {err}"
         finally:
             cursor.close()
             conn.close()
@@ -51,30 +52,25 @@ def sedes():
     conn.close()
     return render_template('sedes.html', ciudades=ciudades)
 
-# ---- CONFIRMACIÓN DE SEDE ----
-@app.route('/sedes_ok')
-def sedes_ok():
-    codsede = request.args.get('codsede')
-    return render_template('sedes_ok.html', codsede=codsede)
+# Ruta confirmación
+@app.route('/sedesok/<codsede>')
+def sedesok(codsede):
+    return render_template('sedesok.html', codsede=codsede)
 
-# ---- LISTADO DE SEDES ----
-@app.route('/listado_sedes')
-def listado_sedes():
+# Ruta listado sedes
+@app.route('/listasedes')
+def listasedes():
     conn = create_connection()
     cursor = conn.cursor(dictionary=True)
-
     cursor.execute("""
-        SELECT s.codsede, s.nombresede, s.dirsede, c.nombreciudad
-        FROM sede s
-        LEFT JOIN ciudad c ON s.IdCiudad = c.IdCiudad
+        SELECT sede.codsede, sede.nombresede, sede.dirsede, ciudad.nombreciudad
+        FROM sede
+        JOIN ciudad ON sede.IdCiudad = ciudad.IdCiudad
     """)
     sedes = cursor.fetchall()
-
     cursor.close()
     conn.close()
-    return render_template('listado_sedes.html', sedes=sedes)
+    return render_template('listasedes.html', sedes=sedes)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

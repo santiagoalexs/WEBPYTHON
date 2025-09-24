@@ -1,144 +1,104 @@
-/* ====== ENCABEZADO CON LOGO ====== */
+/* Logo */
 .fusion-logo {
-    background-color: #0d2a52; /* azul institucional */
-    padding: 20px;
+    background-color: #0d2a52;
+    padding: 15px 0;
     text-align: center;
-    color: white;
 }
-
 .fusion-logo img {
-    max-width: 120px;
-    height: auto;
-    margin-bottom: 10px;
+    max-width: 180px;
     border-radius: 10px;
 }
 
-/* ====== TITULOS ====== */
-h1, h2, h3 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Navbar */
+.navbar {
+    background-color: #154b8a;
+    padding: 12px 0;
+    text-align: center;
+}
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navbar ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+.navbar ul li a:hover {
+    color: #ffd700;
+}
+
+/* General */
+h1, h2 {
     color: #0d2a52;
-    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-h1 {
-    margin-bottom: 20px;
-}
-
-h2 {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    color: #154b8a;
-}
-
-/* ====== CARDS ====== */
 .card {
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(13, 42, 82, 0.2);
-    background-color: #ffffff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 30px;
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 800px;
 }
 
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(13, 42, 82, 0.25);
-}
-
-/* ====== BOTONES ====== */
-.btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.btn {
-    border-radius: 8px;
-    font-weight: 600;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background-color: #0d2a52;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #154b8a;
-    box-shadow: 0 4px 12px rgba(13, 42, 82, 0.3);
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    border: none;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.btn-success {
-    background-color: #198754;
-    border: none;
-}
-
-.btn-success:hover {
-    background-color: #157347;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* ====== TABLAS ====== */
-.table {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(13, 42, 82, 0.1);
-}
-
-.table thead {
-    background-color: #0d2a52;
-    color: white;
-}
-
-.table tbody tr:hover {
-    background-color: #f1f5f9;
-}
-
-/* ====== FORMULARIOS ====== */
+/* Formulario */
 form {
-    background-color: #f4f8fb;
-    padding: 25px 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(13, 42, 82, 0.1);
-    max-width: 600px;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
-
-form .form-label {
-    font-weight: 600;
-    color: #0d2a52;
-}
-
-form .form-control {
+.form-control {
     border-radius: 8px;
     border: 1px solid #b6c6d6;
     padding: 10px;
     font-size: 1rem;
-    transition: all 0.3s ease;
+}
+.btn-primary {
+    background-color: #0d2a52;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+.btn-primary:hover {
+    background-color: #154b8a;
 }
 
-form .form-control:focus {
-    border-color: #0d2a52;
-    box-shadow: 0 0 5px rgba(13, 42, 82, 0.3);
+/* Tabla */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.table th, .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.table thead {
+    background-color: #0d2a52;
+    color: white;
+}
+.table tbody tr:hover {
+    background-color: #f1f5f9;
 }
 
-/* ====== FOOTER ====== */
+/* Footer */
 .footer {
     background-color: #0d2a52;
     color: white;
-    text-align: center;
     padding: 15px;
+    text-align: center;
     margin-top: 40px;
-    font-size: 0.9rem;
-    border-top: 3px solid #154b8a;
+    border-radius: 8px 8px 0 0;
 }
