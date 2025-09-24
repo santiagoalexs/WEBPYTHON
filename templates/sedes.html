@@ -4,30 +4,35 @@
 
 {% block content %}
 <div class="card shadow-lg p-4 mt-4">
-    <h2 class="text-center text-primary mb-4">Registrar Nueva Sede</h2>
-    <form method="POST">
+    <h2 class="text-center">Registro de Sedes</h2>
+
+    <form method="POST" class="mt-4">
         <div class="mb-3">
-            <label for="codsede" class="form-label">Código de Sede</label>
-            <input type="text" class="form-control" id="codsede" name="codsede" required>
+            <label class="form-label">Código de la Sede</label>
+            <input type="text" class="form-control" name="codsede" required>
         </div>
         <div class="mb-3">
-            <label for="nombresede" class="form-label">Nombre de la Sede</label>
-            <input type="text" class="form-control" id="nombresede" name="nombresede" required>
+            <label class="form-label">Nombre de la Sede</label>
+            <input type="text" class="form-control" name="nombresede" required>
         </div>
         <div class="mb-3">
-            <label for="dirsede" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="dirsede" name="dirsede" required>
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" name="dirsede" required>
         </div>
         <div class="mb-3">
-            <label for="idciudad" class="form-label">Ciudad</label>
-            <select class="form-control" id="idciudad" name="idciudad" required>
+            <label class="form-label">Ciudad</label>
+            <select name="IdCiudad" class="form-control" required>
                 {% for ciudad in ciudades %}
                 <option value="{{ ciudad.IdCiudad }}">{{ ciudad.nombreciudad }}</option>
                 {% endfor %}
             </select>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+        <div class="btn-container">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
     </form>
 </div>
 {% endblock %}
+
 
