@@ -1,33 +1,63 @@
 {% extends 'base.html' %}
-
 {% block title %}Lista de Sedes{% endblock %}
-
 {% block content %}
-<div class="card">
-    <h2 class="text-center">Listado de Sedes</h2>
+<div class="container">
+    <h2 class="text-center mb-4">📋 Lista de Sedes</h2>
+
     {% if sedes %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Dirección</th>
-                <th>Ciudad</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for sede in sedes %}
-            <tr>
-                <td>{{ sede.codsede }}</td>
-                <td>{{ sede.nombresede }}</td>
-                <td>{{ sede.dirsede }}</td>
-                <td>{{ sede.nombreciudad }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center align-middle shadow">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Ciudad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sede in sedes %}
+                <tr id="row-{{ sede[0] }}">
+                    <td>{{ sede[0] }}</td>
+                    <td class="editable" data-field="nombre">{{ sede[1] }}</td>
+                    <td class="editable" data-field="ciudad">{{ sede[2] }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editarFila({{ sede[0] }})">✏️ Editar</button>
+                        <form action="{{ url_for('eliminar_sede', id=sede[0]) }}" method="POST" style="display:inline;">
+                            <button class="btn btn-danger btn-sm">🗑️ Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-    <p class="text-muted">No hay sedes registradas.</p>
+    <p class="text-muted text-center">No hay sedes registradas aún.</p>
     {% endif %}
 </div>
+
+<script>
+function editarFila(id) {
+    let fila = document.getElementById("row-" + id);
+    let celdas = fila.querySelectorAll(".editable");
+
+    let nombre = celdas[0].innerText;
+    let ciudad = celdas[1].innerText;
+
+    fila.innerHTML = `
+        <td>${id}</td>
+        <td><input type="text" name="nombre" class="form-control form-control-sm" value="${nombre}"></td>
+        <td><input type="text" name="ciudad" class="form-control form-control-sm" value="${ciudad}"></td>
+        <td>
+            <form action="/editar_sede/${id}" method="POST" style="display:inline;">
+                <input type="hidden" name="nombre" value="${nombre}">
+                <input type="hidden" name="ciudad" value="${ciudad}">
+                <button class="btn btn-success btn-sm">💾 Guardar</button>
+            </form>
+            <button class="btn btn-secondary btn-sm" onclick="location.reload()">❌ Cancelar</button>
+        </td>
+    `;
+}
+</script>
 {% endblock %}

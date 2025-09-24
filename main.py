@@ -1,76 +1,84 @@
 from flask import Flask, render_template, request, redirect, url_for
-import mysql.connector
 from conexion import create_connection
 
 app = Flask(__name__)
 
-# Ruta inicio
+# Página de inicio
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Ruta misión
+# Página de misión
 @app.route('/mision')
 def mision():
     return render_template('mision.html')
 
-# Ruta visión
+# Página de visión
 @app.route('/vision')
 def vision():
     return render_template('vision.html')
 
-# Ruta formulario agregar sede
+# Agregar sede
 @app.route('/sedes', methods=['GET', 'POST'])
 def sedes():
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    # Obtener ciudades para el select
-    cursor.execute("SELECT IdCiudad, nombreciudad FROM ciudad")
-    ciudades = cursor.fetchall()
+    cursor = conn.cursor()
 
     if request.method == 'POST':
         codsede = request.form['codsede']
         nombresede = request.form['nombresede']
         dirsede = request.form['dirsede']
-        IdCiudad = request.form['IdCiudad']
+        ciudad = request.form['ciudad']
 
-        try:
-            cursor.execute(
-                "INSERT INTO sede (codsede, nombresede, dirsede, IdCiudad) VALUES (%s, %s, %s, %s)",
-                (codsede, nombresede, dirsede, IdCiudad)
-            )
-            conn.commit()
-            return redirect(url_for('sedesok', codsede=codsede))
-        except mysql.connector.Error as err:
-            return f"Error al insertar: {err}"
-        finally:
-            cursor.close()
-            conn.close()
+        cursor.execute(
+            "INSERT INTO sede (codsede, nombresede, dirsede, IdCiudad) VALUES (%s, %s, %s, %s)",
+            (codsede, nombresede, dirsede, ciudad)
+        )
+        conn.commit()
+        conn.close()
+        return render_template('sedesok.html', codsede=codsede)
 
-    cursor.close()
+    cursor.execute("SELECT IdCiudad, nombreciudad FROM ciudad")
+    ciudades = cursor.fetchall()
     conn.close()
     return render_template('sedes.html', ciudades=ciudades)
 
-# Ruta confirmación
-@app.route('/sedesok/<codsede>')
-def sedesok(codsede):
-    return render_template('sedesok.html', codsede=codsede)
-
-# Ruta listado sedes
+# Listado de sedes
 @app.route('/listasedes')
 def listasedes():
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     cursor.execute("""
-        SELECT sede.codsede, sede.nombresede, sede.dirsede, ciudad.nombreciudad
-        FROM sede
-        JOIN ciudad ON sede.IdCiudad = ciudad.IdCiudad
+        SELECT s.IdSede, s.nombresede, c.nombreciudad
+        FROM sede s
+        LEFT JOIN ciudad c ON s.IdCiudad = c.IdCiudad
     """)
     sedes = cursor.fetchall()
-    cursor.close()
     conn.close()
     return render_template('listasedes.html', sedes=sedes)
+
+# Eliminar sede
+@app.route('/eliminar_sede/<int:id>', methods=['POST'])
+def eliminar_sede(id):
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM sede WHERE IdSede = %s", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('listasedes'))
+
+# Editar sede
+@app.route('/editar_sede/<int:id>', methods=['POST'])
+def editar_sede(id):
+    nombre = request.form['nombre']
+    ciudad = request.form['ciudad']
+
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE sede SET nombresede=%s, IdCiudad=%s WHERE IdSede=%s", (nombre, ciudad, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('listasedes'))
 
 if __name__ == '__main__':
     app.run(debug=True)

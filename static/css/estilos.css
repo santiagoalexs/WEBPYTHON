@@ -1,104 +1,66 @@
-/* Logo */
-.fusion-logo {
-    background-color: #0d2a52;
-    padding: 15px 0;
-    text-align: center;
+/* Fondo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f9;
+    color: #333;
 }
-.fusion-logo img {
-    max-width: 180px;
+
+/* Header */
+.header-bg {
+    background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+    color: white;
+    border-bottom: 3px solid #0a58ca;
+}
+
+.logo {
+    width: 120px;
     border-radius: 10px;
 }
 
-/* Navbar */
-.navbar {
-    background-color: #154b8a;
-    padding: 12px 0;
-    text-align: center;
-}
-.navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.navbar ul li {
-    display: inline-block;
-    margin: 0 15px;
-}
-.navbar ul li a {
-    color: white;
-    text-decoration: none;
+/* Botones de navegación */
+.btn-nav {
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 20px;
     font-weight: 600;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-.navbar ul li a:hover {
-    color: #ffd700;
+    color: white !important;
+    background: #0d6efd;
+    border: none;
+    transition: 0.3s;
 }
 
-/* General */
-h1, h2 {
-    color: #0d2a52;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.btn-nav:hover {
+    background: #0a58ca;
+    transform: scale(1.05);
 }
+
+/* Cards */
 .card {
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(13, 42, 82, 0.2);
-    padding: 30px;
-    background-color: #fff;
-    margin: 20px auto;
-    max-width: 800px;
-}
-
-/* Formulario */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.form-control {
-    border-radius: 8px;
-    border: 1px solid #b6c6d6;
-    padding: 10px;
-    font-size: 1rem;
-}
-.btn-primary {
-    background-color: #0d2a52;
     border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    color: white;
-    cursor: pointer;
-}
-.btn-primary:hover {
-    background-color: #154b8a;
-}
-
-/* Tabla */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-.table th, .table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
-.table thead {
-    background-color: #0d2a52;
-    color: white;
-}
-.table tbody tr:hover {
-    background-color: #f1f5f9;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    background: white;
 }
 
 /* Footer */
-.footer {
-    background-color: #0d2a52;
+.footer-bg {
+    background: #0d6efd;
     color: white;
-    padding: 15px;
-    text-align: center;
-    margin-top: 40px;
-    border-radius: 8px 8px 0 0;
+    border-top: 3px solid #0a58ca;
+}
+
+/* Tablas */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #0d6efd;
+    color: white;
+    font-weight: bold;
+}
+
+.table tbody tr:hover {
+    background: #f1f5ff;
 }
