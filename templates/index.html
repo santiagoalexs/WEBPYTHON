@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
+
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h2>Bienvenidos a la Universitaria de Colombia</h2>
-    <h1>Santiago Ariza</h1>
-    <p>This is a simple Flask application with HTML, CSS, and JavaScript.</p>
-    <button id="myButton">Click Me!</button>
-    <p>Explora nuestras sedes, misión y visión.</p>
-    <a href="{{ url_for('sedes') }}" class="btn btn-primary">Agregar Sede</a>
-    <a href="{{ url_for('listasedes') }}" class="btn btn-secondary">Ver Listado</a>
+<div class="card shadow-lg p-4 mt-4">
+    <h1 class="text-center text-primary">Bienvenido a la Universitaria de Colombia</h1>
+    <h2>Santiago Ariza</h2>
+    <p class="text-center mt-3">Este es un sistema académico desarrollado con Flask, MySQL y Bootstrap.</p>
 </div>
 {% endblock %}
 

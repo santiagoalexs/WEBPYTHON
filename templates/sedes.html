@@ -1,37 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}Registro de Sede{% endblock %}
+{% block title %}Agregar Sede{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow-lg p-4 rounded-3">
-    <h2 class="text-center text-primary mb-4">Agregar Sede</h2>
-    <form action="/sedeok" method="POST">
-      <div class="mb-3">
-        <label for="codsede" class="form-label">Código de la Sede</label>
-        <input type="number" id="codsede" name="codsede" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label for="nombresede" class="form-label">Nombre de la Sede</label>
-        <input type="text" id="nombresede" name="nombresede" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label for="dirsede" class="form-label">Dirección de la Sede</label>
-        <input type="text" id="dirsede" name="dirsede" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label for="IdCiudad" class="form-label">Ciudad</label>
-        <select id="IdCiudad" name="IdCiudad" class="form-control" required>
-          <option value="" disabled selected>Seleccione una ciudad</option>
-          {% for ciudad in ciudades %}
-          <option value="{{ ciudad[0] }}">{{ ciudad[1] }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Registrar</button>
-      <a href="{{ url_for('listasedes') }}" class="btn btn-secondary">Ver Listado</a>
+<div class="card shadow-lg p-4 mt-4">
+    <h2 class="text-center text-primary mb-4">Registrar Nueva Sede</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="codsede" class="form-label">Código de Sede</label>
+            <input type="text" class="form-control" id="codsede" name="codsede" required>
+        </div>
+        <div class="mb-3">
+            <label for="nombresede" class="form-label">Nombre de la Sede</label>
+            <input type="text" class="form-control" id="nombresede" name="nombresede" required>
+        </div>
+        <div class="mb-3">
+            <label for="dirsede" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="dirsede" name="dirsede" required>
+        </div>
+        <div class="mb-3">
+            <label for="idciudad" class="form-label">Ciudad</label>
+            <select class="form-control" id="idciudad" name="idciudad" required>
+                {% for ciudad in ciudades %}
+                <option value="{{ ciudad.IdCiudad }}">{{ ciudad.nombreciudad }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Guardar</button>
     </form>
-  </div>
 </div>
 {% endblock %}
 
