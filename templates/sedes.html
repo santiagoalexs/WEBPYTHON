@@ -3,32 +3,49 @@
 {% block title %}➕ Agregar / Editar Sede{% endblock %}
 
 {% block content %}
-<div class="card shadow-lg p-4 mt-4">
-    <h2 class="text-center text-warning">🏫 {{ 'Editar Sede' if sede else 'Agregar Nueva Sede' }}</h2>
+<div class="card shadow-lg p-4">
+    <h2 class="text-center mb-4">🏫 {% if sede %}Editar Sede{% else %}Agregar Nueva Sede{% endif %}</h2>
 
     <form method="POST">
-        <label class="form-label">🔢 Código Sede:</label>
-        <input type="text" class="form-control" name="codsede" value="{{ sede.codsede if sede else '' }}" required>
-
-        <label class="form-label mt-3">🏛️ Nombre Sede:</label>
-        <input type="text" class="form-control" name="nombresede" value="{{ sede.nombresede if sede else '' }}" required>
-
-        <label class="form-label mt-3">📍 Dirección:</label>
-        <input type="text" class="form-control" name="dirsede" value="{{ sede.dirsede if sede else '' }}">
-
-        <label class="form-label mt-3">🌆 Ciudad:</label>
-        <select class="form-control" name="IdCiudad" required>
-            {% for ciudad in ciudades %}
-                <option value="{{ ciudad.IdCiudad }}" {% if sede and sede.IdCiudad == ciudad.IdCiudad %}selected{% endif %}>
-                    {{ ciudad.nombreciudad }}
-                </option>
-            {% endfor %}
-        </select>
-
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success">💾 Guardar</button>
-            <button type="reset" class="btn btn-secondary">🧹 Limpiar</button>
+        <!-- Código de sede -->
+        <div class="mb-3">
+            <label class="form-label">📌 Código de sede:</label>
+            <input type="text" name="codsede" class="form-control" 
+                   value="{{ sede.codsede if sede else '' }}" placeholder="Ej: 101" required>
         </div>
+
+        <!-- Nombre de sede -->
+        <div class="mb-3">
+            <label class="form-label">🏢 Nombre de sede:</label>
+            <input type="text" name="nombresede" class="form-control"
+                   value="{{ sede.nombresede if sede else '' }}" placeholder="Ej: Sede Norte" required>
+        </div>
+
+        <!-- Dirección -->
+        <div class="mb-3">
+            <label class="form-label">📍 Dirección:</label>
+            <input type="text" name="dirsede" class="form-control"
+                   value="{{ sede.dirsede if sede else '' }}" placeholder="Ej: Calle 123 #45-67" required>
+        </div>
+
+        <!-- Ciudad -->
+        <div class="mb-3">
+            <label class="form-label">🏙️ Ciudad:</label>
+            <select name="IdCiudad" class="form-select" required>
+                <option value="" disabled {% if not sede %}selected{% endif %}>Seleccione una ciudad</option>
+                {% for ciudad in ciudades %}
+                    <option value="{{ ciudad.IdCiudad }}" 
+                            {% if sede and sede.IdCiudad == ciudad.IdCiudad %}selected{% endif %}>
+                        {{ ciudad.nombreciudad }} (📮 {{ ciudad.codigopostal }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Botón -->
+        <button type="submit" class="btn btn-success w-100">
+            💾 {% if sede %}Actualizar Sede{% else %}Guardar Sede{% endif %}
+        </button>
     </form>
 </div>
 {% endblock %}

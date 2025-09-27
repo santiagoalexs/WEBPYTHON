@@ -3,66 +3,59 @@
 {% block title %}📋 Listado de Sedes{% endblock %}
 
 {% block content %}
-<div class="card shadow-lg p-4 mt-4">
-    <h2 class="text-center text-dark">📋 Listado de Sedes</h2>
+<div class="card shadow-lg p-4 mt-4 futuristic-card">
+    <h2 class="text-center mb-4 text-gradient">📋 Listado de Sedes</h2>
 
-    {% if sedes %}
-    <div class="table-responsive mt-3">
-        <table class="table table-hover align-middle">
-            <thead class="table-dark text-center">
+    <!-- Botón para agregar nueva sede -->
+    <div class="text-center mb-4">
+        <a href="{{ url_for('sedes') }}" class="btn futuristic-btn futuristic-btn-add">
+            ➕ Agregar Sede
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table futuristic-table align-middle shadow-sm">
+            <thead>
                 <tr>
-                    <th>🔢 Código</th>
-                    <th>🏛️ Nombre</th>
-                    <th>📍 Dirección</th>
-                    <th>🌆 Ciudad</th>
+                    <th>🏷️ Código Sede</th>
+                    <th>📍 Nombre</th>
+                    <th>🏠 Dirección</th>
+                    <th>🏙️ Ciudad</th>
+                    <th>📮 Código Postal</th>
                     <th>⚙️ Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for sede in sedes %}
                 <tr>
-                    <td class="text-center">{{ sede.codsede }}</td>
+                    <td class="fw-bold text-center">{{ sede.codsede }}</td>
                     <td>{{ sede.nombresede }}</td>
                     <td>{{ sede.dirsede }}</td>
                     <td>{{ sede.nombreciudad }}</td>
+                    <td class="text-center">{{ sede.codigopostal }}</td>
                     <td class="text-center">
-                        <!-- Botón editar -->
-                        <a href="{{ url_for('editar_sede', id=sede.IdSede) }}" class="btn btn-sm btn-warning">✏️ Editar</a>
-
-                        <!-- Botón eliminar con modal -->
-                        <button type="button" class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#modalEliminar{{ sede.IdSede }}">
-                            🗑️ Eliminar
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="modalEliminar{{ sede.IdSede }}" tabindex="-1" aria-labelledby="modalLabel{{ sede.IdSede }}" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel{{ sede.IdSede }}">⚠️ Confirmar eliminación</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                              </div>
-                              <div class="modal-body">
-                                ¿Está seguro que desea eliminar la sede <strong>{{ sede.nombresede }}</strong>?
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <form action="{{ url_for('eliminar_sede', id=sede.IdSede) }}" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
+                        <a href="{{ url_for('editar_sede', id=sede.IdSede) }}" 
+                           class="btn futuristic-btn futuristic-btn-edit">
+                            ✏️ Editar
+                        </a>
+                        <form action="{{ url_for('eliminar_sede', id=sede.IdSede) }}" 
+                              method="post" style="display:inline;" 
+                              onsubmit="return confirm('⚠️ ¿Seguro que quieres eliminar la sede {{ sede.nombresede }}?');">
+                            <button type="submit" class="btn futuristic-btn futuristic-btn-delete">
+                                🗑️ Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">
+                        🚫 No hay sedes registradas
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    {% else %}
-    <p class="text-center text-muted mt-3">😕 No hay sedes registradas.</p>
-    {% endif %}
 </div>
 {% endblock %}

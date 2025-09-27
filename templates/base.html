@@ -3,35 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Universitaria de Colombia{% endblock %}</title>
+    <title>{% block title %}Mi Proyecto Flask{% endblock %}</title>
+    
+    <!-- ✅ Enlace al CSS personalizado -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- ✅ Bootstrap (opcional) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- 🔹 Encabezado con logo -->
-    <header class="fusion-logo">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Universidad">
-    </header>
 
-    <!-- 🔹 Menú centrado -->
+    <!-- 🔹 Logo -->
+    <div class="fusion-logo text-center mt-3">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+    </div>
+
+    <!-- 🔹 Menú superior -->
     <nav class="text-center mt-3">
-        <a href="{{ url_for('index') }}" class="btn btn-primary">🏠 Inicio</a>
-        <a href="{{ url_for('mision') }}" class="btn btn-success">🎯 Misión</a>
-        <a href="{{ url_for('vision') }}" class="btn btn-info">👀 Visión</a>
-        <a href="{{ url_for('sedes') }}" class="btn btn-warning">➕ Agregar Sede</a>
-        <a href="{{ url_for('listado_sedes') }}" class="btn btn-dark">📋 Listar Sedes</a>
+        <a href="{{ url_for('index') }}" class="btn btn-primary mx-2">🏠 Inicio</a>
+        <a href="{{ url_for('mision') }}" class="btn btn-secondary mx-2">🎯 Misión</a>
+        <a href="{{ url_for('vision') }}" class="btn btn-info mx-2">👁️ Visión</a>
+        <a href="{{ url_for('listado_sedes') }}" class="btn btn-success mx-2">🏫 Sedes</a>
+        <a href="{{ url_for('ciudades') }}" class="btn btn-warning mx-2">🌍 Ciudades</a>
     </nav>
 
+    <!-- 🔹 Contenido dinámico -->
     <main class="container mt-4">
         {% block content %}{% endblock %}
     </main>
 
     <!-- 🔹 Footer -->
-    <footer class="text-center mt-4 p-3 bg-dark text-white">
-        © 2025 Universitaria de Colombia | Desarrollado por 🚀 Santiago Ariza
+    <footer class="text-center mt-5 p-3 bg-light border-top">
+        <p>© 2025 Universitaria de Colombia | Desarrollado por <b>Santiago Ariza</b> 🎓</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    {% block scripts %}{% endblock %}
+    <!-- ✅ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

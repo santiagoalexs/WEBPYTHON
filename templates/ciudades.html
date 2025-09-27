@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}🏙️ Gestión de Ciudades{% endblock %}
+
+{% block content %}
+<div class="card shadow-lg p-4">
+    <h2 class="text-center mb-4">🏙️ Gestión de Ciudades</h2>
+
+    <!-- Formulario -->
+    <form method="POST" class="mb-4">
+        <div class="mb-3">
+            <label class="form-label">🏙️ Nombre de la ciudad:</label>
+            <input type="text" name="nombreciudad" class="form-control" placeholder="Ej: Bogotá" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">📮 Código postal:</label>
+            <input type="text" name="codigopostal" class="form-control" placeholder="Ej: 110111" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">➕ Agregar Ciudad</button>
+    </form>
+
+    <!-- Tabla de ciudades -->
+    <table class="table table-striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>🏙️ Ciudad</th>
+                <th>📮 Código Postal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ciudad in ciudades %}
+            <tr>
+                <td>{{ ciudad.IdCiudad }}</td>
+                <td>{{ ciudad.nombreciudad }}</td>
+                <td>{{ ciudad.codigopostal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
